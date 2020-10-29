@@ -7,12 +7,18 @@ import Title from '../Title/Title';
 
 function App() {
   const [articles, setArticles] = useState([]);
-
   useEffect(() => {
-    fetch('http://localhost:3001/articles')
+    fetch('http://localhost:3000/articles')
       .then(response => response.json())
       .then(data => setArticles(data));
   }, [setArticles]);
+
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3000/categories')
+      .then(response => response.json())
+      .then(data => setCategories(data));
+  }, [setCategories]);
 
   const pdt1 = {
     price: 12,
@@ -33,7 +39,7 @@ function App() {
       <Title title={title} />
       <button onClick={handleClick}>change title</button>
       <Resize/>
-      <List articles={articles} />
+      <List articles={articles} categories={categories} />
       <CartItem product={pdt1} />
       <CartItem product={pdt2} />
     </div>
