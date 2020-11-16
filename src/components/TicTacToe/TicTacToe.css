@@ -1,0 +1,12 @@
+.TicTacToe {
+  margin-top: 100px;
+}
+
+.TicTacToe__cell {
+  height: 100px;
+  width: 100px;
+}
+
+.TicTacToe_line {
+  text-align: center;
+}

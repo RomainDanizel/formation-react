@@ -1,22 +1,19 @@
-import { useState } from 'react';
-
 import './CartItem.css';
 
 function CartItem(props) {
-  const { product } = props;
-  const { name, price } = product;
-  const [ quantity, setQuantity ] = useState(1);
+  const { product, updateQuantity } = props;
+  const { id, name, price, quantity } = product;
   const total = price * quantity;
   // const [ total, setTotal ] = useState(price * quantity);
 
   function handleMinus() {
     if (quantity > 0) {
-      setQuantity((qty) => qty - 1);
+      updateQuantity(id, quantity - 1);
     }
   }
 
   function handlePlus() {
-    setQuantity((qty) => qty + 1);
+    updateQuantity(id, quantity + 1);
   }
 
   return (

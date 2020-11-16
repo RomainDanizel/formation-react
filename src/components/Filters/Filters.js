@@ -1,11 +1,20 @@
+import { useRef, useEffect, useContext } from 'react';
+
+import categoriesContext from '../../contexts/categories';
+
 function Filters(props) {
   const {
-    categories,
     category,
     published,
     title,
     handleFilterChange
   } = props;
+  const categories = useContext(categoriesContext);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [inputRef]);
 
   return (
     <div>
@@ -14,6 +23,7 @@ function Filters(props) {
         type="text"
         value={title}
         onChange={handleFilterChange}
+        ref={inputRef}
       />
       <select
         name="category"
