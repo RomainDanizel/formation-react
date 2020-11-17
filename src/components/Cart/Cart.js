@@ -1,30 +1,20 @@
-import { useState } from 'react';
+import { useContext } from 'react';
+
+import cartContext from '../../contexts/cart';
+import setCartContext from '../../contexts/setCart';
 
 import CartItem from '../CartItem/CartItem';
 
 function Cart() {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      price: 12,
-      name: 'foo',
-      quantity: 1
-    },
-    {
-      id: 2,
-      price: 42,
-      name: 'bar',
-      quantity: 1
-    }
-  ]);
+  const cart  = useContext(cartContext);
+  const dispatch  = useContext(setCartContext);
 
   function updateQuantity(id, quantity) {
-    const newCart = cart.map(
-      item => item.id === id
-        ? { ...item, quantity: quantity }
-        : item
-    );
-    setCart(newCart);
+    dispatch({
+      type: 'updateQuantity',
+      id: id,
+      quantity: quantity
+    });
   }
 
   const total = cart.reduce(
