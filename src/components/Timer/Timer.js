@@ -1,16 +1,41 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 
 import './Timer.css';
 
+function reducer(state, action) {
+  switch(action.type) {
+    case 'inc':
+      return {
+        ...state,
+        time: state.time + state.step,
+      };
+
+    case 'reset':
+      return {
+        ...state,
+        time: 0
+      };
+
+    case 'step':
+      return {
+        ...state,
+        step: action.step
+      };
+
+    default:
+      return state;
+  }
+}
+
 function Timer() {
-  const [time, setTime] = useState(0);
   const [start, setStart] = useState(false);
+  const [state, dispatch] = useReducer(reducer, { time: 0, step: 1 });
 
   useEffect(() => {
     let intervalId;
     if (start) {
       intervalId = setInterval(() => {
-        setTime(time => time + 1)
+        dispatch({ type: 'inc' });
       }, 1000);
     }
     return () => {
@@ -30,12 +55,23 @@ function Timer() {
 
   function handleStop() {
     setStart(false);
-    setTime(0);
+    dispatch({ type: 'reset' });
+  }
+
+  function handleChange(event) {
+    dispatch({ type: 'step', step: Number(event.target.value) });
   }
 
   return (
     <div className="Timer">
-      <div>{time}</div>
+      <input
+        className="Timer__input"
+        value={state.step}
+        onChange={handleChange}
+        type="number"
+        min="1"
+      />
+      <div>{state.time}</div>
       <button
         className="Timer__button"
         type="button"
