@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, memo } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
@@ -47,4 +47,4 @@ Article.defaultProps = {
   article: {}
 };
 
-export default Article;
+export default memo(Article);

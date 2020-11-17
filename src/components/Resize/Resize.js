@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 function Resize() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -18,4 +18,4 @@ function Resize() {
   );
 }
 
-export default Resize;
+export default memo(Resize);

@@ -1,0 +1,12 @@
+.Timer {
+  font-size: 400%;
+}
+
+.Timer__input {
+  font-size: 100%;
+  width: 95%;
+}
+
+.Timer__button {
+  font-size: 100%;
+}

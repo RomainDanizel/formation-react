@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 
 import Article from '../Article/Article';
 
@@ -8,13 +8,13 @@ function List(props) {
   // const [selectedArticles, setSelectedArticles] = useState({});
   const [selectedArticles, setSelectedArticles] = useState(new Map());
 
-  function updateSelected(id) {
-    // const clone = {...selectedArticles};
-    const clone = new Map([...selectedArticles]);
-    // clone[id] = !clone[id];
-    clone.set(id, !clone.get(id));
-    setSelectedArticles(clone);
-  }
+  const updateSelected = useCallback((id) => {
+    setSelectedArticles((selectedArticles) => {
+      const clone = new Map([...selectedArticles]);
+      clone.set(id, !clone.get(id));
+      return clone;
+    });
+  }, []);
 
   function handleChange(event) {
     const checked = event.target.checked
@@ -40,4 +40,4 @@ function List(props) {
   );
 }
 
-export default List;
+export default memo(List);
