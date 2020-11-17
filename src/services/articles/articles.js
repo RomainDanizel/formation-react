@@ -1,16 +1,16 @@
 export function getArticles() {
-  return fetch('http://localhost:3000/articles')
+  return fetch('http://localhost:3001/articles')
     .then(response => response.json());
 }
 
 export function getArticle(id) {
-  return fetch(`http://localhost:3000/articles/${id}`)
+  return fetch(`http://localhost:3001/articles/${id}`)
     .then(response => response.json());
 }
 
 export function createArticle(article) {
   return fetch(
-    'http://localhost:3000/articles',
+    'http://localhost:3001/articles',
     {
       method: 'POST',
       headers: {
@@ -26,7 +26,7 @@ export function createArticle(article) {
 
 export function updateArticle(article) {
   return fetch(
-    `http://localhost:3000/articles/${article.id}`,
+    `http://localhost:3001/articles/${article.id}`,
     {
       method: 'PUT',
       headers: {
@@ -42,7 +42,7 @@ export function updateArticle(article) {
 
 export function deleteArticle(id) {
   return fetch(
-    `http://localhost:3000/articles/${id}`,
+    `http://localhost:3001/articles/${id}`,
     { method: 'DELETE' }
   );
 }
