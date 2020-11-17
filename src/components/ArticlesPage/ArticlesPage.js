@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { deleteArticle } from '../../services/articles/articles';
@@ -13,6 +13,7 @@ import Title from '../Title/Title';
 
 function ArticlesPage() {
   const [articles, setArticles] = useArticles();
+  const [count, setCount] = useState(0);
 
   const [filters, setFilters] = useState({
     title: '',
@@ -20,40 +21,36 @@ function ArticlesPage() {
     published: ''
   });
   function handleFilterChange(event) {
-    setFilters({
+    setFilters(filters => ({
       ...filters,
       [event.target.name]: event.target.value
-    });
+    }));
   }
 
-  function handleArticleDeleted(id) {
+  const handleArticleDeleted = useCallback((id) => {
     deleteArticle(id)
       .then(() => {
         const data = articles.filter(article => article.id !== id);
         setArticles(data);
       });
+  }, [articles, setArticles]);
 
-    // deleteArticle(id)
-    //   .catch(() =>
-    //     getArticles().then(data => setArticles(data))
-    //   );
-    // const data = articles.filter(article => article.id !== id);
-    // setArticles(data);
-  }
-
-  const filteredArticles = articles
-    .filter(art => art.title.includes(filters.title))
-    .filter(art => filters.category === '' ||
-      art.category === Number(filters.category))
-    .filter(art => filters.published === '' ||
-      (art.published === true && filters.published === 'published') ||
-      (art.published === false && filters.published === 'draft'));
+  const filteredArticles = useMemo(() => {
+    return articles
+      .filter(art => art.title.includes(filters.title))
+      .filter(art => filters.category === '' ||
+        art.category === Number(filters.category))
+      .filter(art => filters.published === '' ||
+        (art.published === true && filters.published === 'published') ||
+        (art.published === false && filters.published === 'draft'));
+  }, [articles, filters.category, filters.title, filters.published]);
 
   return (
     <>
       <Title title="Homepage" />
       <Link to="/article">Add new article</Link>
       <Resize/>
+      <button type="button" onClick={() => setCount(count + 1)}>{count}</button>
 
       <Container>
         <Filters
