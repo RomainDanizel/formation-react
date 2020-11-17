@@ -9,6 +9,7 @@ import ArticlePage from '../ArticlePage/ArticlePage';
 import Cart from '../Cart/Cart';
 import Header from '../Header/Header';
 import TicTacToe from '../TicTacToe/TicTacToe';
+import Timer from '../Timer/Timer';
 
 function App() {
   const categories = useCategories();
@@ -41,6 +42,11 @@ function App() {
             exact
             path="/tictactoe"
             component={TicTacToe}
+          />
+          <Route
+            exact
+            path="/timer"
+            component={Timer}
           />
           <Redirect to="/" />
         </Switch>
